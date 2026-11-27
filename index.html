@@ -55,6 +55,7 @@ header.open .mbtn .burger::after{transform:rotate(-45deg)}
 
 /* hero */
 .hero{position:relative;min-height:80vh;display:flex;align-items:flex-end;border-bottom:1px solid var(--line);overflow:hidden;background:var(--fg)}
+.hero picture.bg{position:absolute;inset:0;display:block}
 .hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7;animation:zoom 14s ease-out both}
 @keyframes zoom{from{transform:scale(1.12)}to{transform:scale(1)}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(70,14,6,.85),rgba(70,14,6,.05) 65%)}
@@ -206,7 +207,10 @@ footer{background:var(--fg);color:var(--bg)}
 
 <main id="top">
   <div class="hero">
-    <img class="bg" alt="ruä Kigali" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2E7Wq7FMNgMGDNjDy1gj7-1gwmhCzoIAcy7DJTGL07wSy94WJuLKt5ZfQ&s=10">
+    <picture class="bg">
+      <source media="(max-width: 47.99rem)" srcset="https://res.cloudinary.com/franklinrw/image/upload/v1795771363/This_is_where_we_are._Tucked_away_good_drinks_the_kind_of_place_you_end_up_staying_longer_than_sodsa8.jpg">
+      <img class="bg" alt="ruä Kigali" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2E7Wq7FMNgMGDNjDy1gj7-1gwmhCzoIAcy7DJTGL07wSy94WJuLKt5ZfQ&amp;s=10">
+    </picture>
     <div class="in">
       <h1>ruä</h1>
       <p>Restaurant &amp; bar in Kigali, Rwanda. Tapas, dinner, desserts and cocktails.</p>
