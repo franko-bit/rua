@@ -12,7 +12,7 @@
 <script>try{var t=localStorage.getItem('rua-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-on')}catch(e){}</script>
 <style>
-:root{--bg:#FFF3E6;--fg:#b83b26;--line:color-mix(in srgb,var(--fg) 45%,transparent);--font:"Space Grotesk",system-ui,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#FFF3E6;--fg:#b83b26;--line:color-mix(in srgb,var(--fg) 45%,transparent);--font:"Space Grotesk",system-ui,sans-serif;--scrim:rgba(70,14,6,.85);--on-img:#FFF3E6;--star:#FFD166;--accent-soft:#FFD2C9;--ease:cubic-bezier(.16,1,.3,1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#b83b26;--fg:#EEEBDA;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#b83b26;--fg:#EEEBDA;color-scheme:dark}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;border-radius:0}
@@ -61,6 +61,11 @@ header.open .mbtn .burger::after{transform:rotate(-45deg)}
 .hero .in{position:relative;z-index:1;padding:2rem 1rem 2.5rem;color:#FFF3E6;width:100%;max-width:80rem;margin:0 auto}
 .hero h1{font-size:clamp(3.5rem,13vw,10rem);margin-bottom:1rem}
 .hero p{max-width:38ch;font-size:1.2rem;margin-bottom:1.5rem}
+.hero-facts{display:grid;gap:.5rem;margin-bottom:1.5rem;font-size:.95rem;line-height:1.4}
+.hero-rating{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem}
+.hero-rating .stars{color:#FFD166}
+.hero-hours{display:flex;align-items:center;gap:.45rem}
+.hero-hours strong{color:#FFD2C9}
 .actions{display:flex;flex-wrap:wrap;gap:.75rem}
 .cta{display:inline-block;border:1px solid currentColor;padding:.6rem 1.1rem;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;transition:background .15s,color .15s}
 .hero .cta:hover{background:#FFF3E6;color:#b83b26}
@@ -131,6 +136,22 @@ input:focus,select:focus,textarea:focus{border-color:var(--fg);box-shadow:inset 
 select option{background:var(--bg);color:var(--fg)}
 #fs{opacity:.8;min-height:1.5em}
 
+/* find us: Google satellite map in the map design system frame */
+.mapwrap{position:relative;height:clamp(26rem,75vh,42rem);background:var(--fg);overflow:hidden}
+.mapwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.mapcard{position:absolute;z-index:700;left:1rem;bottom:1.5rem;width:min(24rem,calc(100% - 2rem));background:var(--bg);color:var(--fg);border:1px solid var(--fg);animation:cardin .25s var(--ease) both}
+@keyframes cardin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mapcard .img{position:relative;aspect-ratio:16/9;border-bottom:1px solid var(--line);background:var(--fg);overflow:hidden}
+.mapcard .img img{width:100%;height:100%;object-fit:cover;animation:mzoom 1.2s var(--ease) both}
+.mapcard .img::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,var(--scrim),transparent 60%)}
+.mapcard .img b{position:absolute;left:1rem;bottom:.8rem;z-index:1;color:var(--on-img);font-size:.85rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase}
+.mapcard h3{font-size:1.6rem;padding:1rem 1rem .25rem}
+.mapcard .meta{padding:0 1rem;opacity:.75;font-size:.9rem}
+.mapcard .actions{display:flex;gap:0;border-top:1px solid var(--line);margin-top:1rem}
+.mapcard .cta{flex:1;border:0;border-right:1px solid var(--line);text-align:center;font-size:.85rem}
+.mapcard .cta:last-child{border-right:0}
+@media(max-width:47.99rem){.mapcard .img{display:none}.mapcard{bottom:1rem}}
+
 /* opening animation: orbiting dots around a centered logo */
 .intro{position:fixed;inset:0;z-index:100;background:var(--fg);color:var(--bg);display:grid;place-items:center;cursor:pointer;overflow:hidden;clip-path:circle(150% at 50% 50%);transition:clip-path 1s cubic-bezier(.65,0,.35,1);animation:introfail 0s 7s forwards}
 .intro.out{clip-path:circle(0% at 50% 50%)}
@@ -176,6 +197,7 @@ footer{background:var(--fg);color:var(--bg)}
       <a href="#video">Video</a>
       <a href="#menu">Menu</a>
       <a href="#reserve">Reserve</a>
+      <a href="#find">Find us</a>
     </nav>
     <button class="mbtn" id="mnav" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mainnav"><i class="burger"></i><span>Menu</span></button>
     <button class="tbtn" id="theme" type="button" aria-label="Toggle theme"><i></i><span>Theme</span></button>
@@ -188,6 +210,9 @@ footer{background:var(--fg);color:var(--bg)}
     <div class="in">
       <h1>ruä</h1>
       <p>Restaurant &amp; bar in Kigali, Rwanda. Tapas, dinner, desserts and cocktails.</p>
+      <div class="hero-facts" aria-label="Restaurant details">
+
+      </div>
       <div class="actions">
         <a class="cta" href="#reserve">Reserve a table</a>
         <a class="cta" href="#menu">See the menu</a>
@@ -249,6 +274,22 @@ footer{background:var(--fg);color:var(--bg)}
       </form>
     </div>
   </section>
+
+  <section id="find">
+    <div class="head"><span class="label">Find us</span><h2>Come say hi.</h2></div>
+    <div class="mapwrap">
+      <iframe title="Satellite map showing ruä Kigali" src="https://maps.google.com/maps?q=-1.9487899,30.0786006&amp;z=18&amp;t=k&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <article class="mapcard">
+        <div class="img"><img src="https://res.cloudinary.com/franklinrw/image/upload/v1795767078/fb0111c9-ba21-411e-850b-f7fece86d324_gr3xq2.jpg" alt="ruä Kigali" onerror="this.parentNode.remove()"><b>Restaurant &amp; bar</b></div>
+        <h3>ruä Kigali</h3>
+        <div class="meta">Kigali, Rwanda</div>
+        <div class="actions">
+          <a class="cta" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/dir/?api=1&amp;destination=-1.9487899,30.0786006">Directions</a>
+          <a class="cta" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/ru%C3%A4+Kigali/@-1.9486802,30.0779821,162m/data=!3m1!1e3!4m6!3m5!1s0x19dca1a6d5593925:0xa534db2c8b727fc3!8m2!3d-1.9487899!4d30.0786006!16s%2Fg%2F11wxf_xthy?entry=ttu&amp;g_ep=EgoyMDI2MTEyMy4wIKXMDSoASAFQAw%3D%3D">Google Maps</a>
+        </div>
+      </article>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -262,6 +303,8 @@ footer{background:var(--fg);color:var(--bg)}
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#menu">Menu</a></li>
       <li><a href="#reserve">Reserve</a></li>
+      <li><a href="#find">Find us</a></li>
+      <li><a href="https://www.instagram.com/rua_kigali/" target="_blank" rel="noopener noreferrer">Instagram: @rua_kigali</a></li>
     </ul>
   </div>
 </footer>
