@@ -92,9 +92,12 @@ section{border-bottom:1px solid var(--line)}
 @media(min-width:48rem){.gallery{grid-template-columns:repeat(4,1fr)}}
 
 /* video */
+.video-carousel{position:relative}
 .video{display:grid;grid-auto-flow:column;grid-auto-columns:100%;gap:2px;padding:1rem;background:var(--fg);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
 .video::-webkit-scrollbar{display:none}
 .video video{display:block;width:100%;height:auto;min-width:0;aspect-ratio:9/16;object-fit:cover;background:#000}
+.video-next{display:none}
+@media(max-width:47.99rem){.video-next{position:absolute;z-index:2;top:50%;right:1.5rem;display:grid;place-items:center;width:2.75rem;height:2.75rem;border:1px solid #FFF3E6;background:#FFF3E6;color:#b83b26;cursor:pointer;transform:translateY(-50%)}.video-next svg{width:1.25rem;height:1.25rem}}
 @media(min-width:48rem){.video{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-columns:auto;overflow:visible;scroll-snap-type:none;padding:1.5rem}}
 
 /* menu rows */
@@ -248,10 +251,15 @@ footer{background:var(--fg);color:var(--bg)}
 
   <section id="video">
     <div class="head"><span class="label">Video</span><h2>See it in motion.</h2></div>
-    <div class="video" aria-label="Video reels" tabindex="0">
-      <video src="https://res.cloudinary.com/franklinrw/video/upload/v1795768242/New_menu_same_energy_Whether_it_s_a_group_dinner_or_tapas_and_sweet_endings_make_it_the_Rua_w_ccnu7r.mp4" aria-label="Video reel 1" autoplay muted loop playsinline></video>
-      <video src="https://res.cloudinary.com/franklinrw/video/upload/v1795768068/Busy_days_deserve_a_proper_ending_A_productive_day_with_kelly_madla_at_Kivu_noir_followed_b_hbing9.mp4" aria-label="Video reel 2" autoplay muted loop playsinline></video>
-      <video src="https://res.cloudinary.com/franklinrw/video/upload/v1795768173/Umuganura_weekend_the_Ru%C3%A4_way_Celebrating_the_flavours_creativity_and_spirit_of_home_fulrdw.mp4" aria-label="Video reel 3" autoplay muted loop playsinline></video>
+    <div class="video-carousel">
+      <div class="video" id="video-reels" aria-label="Video reels" tabindex="0">
+        <video src="https://res.cloudinary.com/franklinrw/video/upload/v1795768242/New_menu_same_energy_Whether_it_s_a_group_dinner_or_tapas_and_sweet_endings_make_it_the_Rua_w_ccnu7r.mp4" aria-label="Video reel 1" autoplay muted loop playsinline></video>
+        <video src="https://res.cloudinary.com/franklinrw/video/upload/v1795768068/Busy_days_deserve_a_proper_ending_A_productive_day_with_kelly_madla_at_Kivu_noir_followed_b_hbing9.mp4" aria-label="Video reel 2" autoplay muted loop playsinline></video>
+        <video src="https://res.cloudinary.com/franklinrw/video/upload/v1795768173/Umuganura_weekend_the_Ru%C3%A4_way_Celebrating_the_flavours_creativity_and_spirit_of_home_fulrdw.mp4" aria-label="Video reel 3" autoplay muted loop playsinline></video>
+      </div>
+      <button class="video-next" id="video-next" type="button" aria-label="Next video">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
     </div>
   </section>
 
@@ -514,6 +522,19 @@ document.getElementById('theme').addEventListener('click',function(){
   r.dataset.theme=n;
   try{localStorage.setItem('rua-theme',n)}catch(e){}
   updateThemeLogos();
+});
+
+// Mobile video carousel next button
+document.getElementById('video-next').addEventListener('click',function(){
+  var reels=document.getElementById('video-reels'),
+      videos=reels.querySelectorAll('video'),
+      step=videos[0].getBoundingClientRect().width+2,
+      index=Math.round(reels.scrollLeft/step),
+      next=(index+1)%videos.length;
+  reels.scrollTo({
+    left:next*step,
+    behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'
+  });
 });
 
 // Reservation: opens an email (edit address)
